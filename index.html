@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locobarber Shop</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- inicio de la pagina -->
+    <div class="logo">
+        <video
+            class="logo-video"
+            id="logoVideo"
+            src="img/IMG_0545.MOV"
+            poster="img/hero-poster.jpg"
+            autoplay
+            muted
+            loop
+            playsinline
+        ></video>
+        <div class="logo-overlay"></div>
+        <div class="logo-contenido">
+            <h1>Loco barber</h1>
+            <h2>Tu corte, <span>tu estilo,</span> tu momento.</h2>
+        </div>
+    </div>
+
+    <div class="franja"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#galeria">Cortes</a></li>
+            <li><a href="#turnos">Turnos</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- parte de servicios -->
+        <section id="servicios">
+            <h2>Servicios</h2>
+            <p>Descubrí nuestros servicios <span>de barbería de alta calidad.</span></p>
+
+            <div class="servicios">
+                <div class="servicios">
+                    <h3>Corte de cabello</h3>
+                    <p>$10.000</p>
+                </div>
+                <div class="servicios">
+                    <h3>Teñido Mechas</h3>
+                    <p>$40.000</p>
+                </div>
+                <div class="servicios">
+                    <h3>Teñido Global</h3>
+                    <p>$50.000</p>
+                </div>
+                <div class="servicios">
+                    <h3>Arreglo de barba</h3>
+                    <p>$5.000</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- galería -->
+        <section id="galeria">
+            <h2>Cortes</h2>
+            <p>Algunos de nuestros <span>trabajos recientes.</span></p>
+
+            <div class="galeria">
+                <img src="img/IMG_0510_resultado.jpg" alt="Corte de cabello 1" loading="lazy">
+                <img src="img/IMG_1416_resultado.jpg" alt="Corte de cabello 2" loading="lazy">
+                <img src="img/IMG_0569_resultado.jpg" alt="Corte de cabello 3" loading="lazy">
+                <img src="img/IMG_3129_resultado.jpg" alt="Corte de cabello 4" loading="lazy">
+            </div>
+        </section>
+
+        <!-- parte de turnos -->
+        <section id="turnos">
+            <h2>Reservá tu turno</h2>
+            <p>Tres pasos: <span>elegí el servicio, el momento, y listo.</span></p>
+
+            <div class="turnos-wrap" id="turnosWrap">
+
+                <form id="formulario" novalidate>
+
+                    <div class="campo">
+                        <label>1. Elegí el servicio</label>
+                        <div class="chips" id="chipsServicio">
+                            <button type="button" class="chip" data-valor="Corte" data-precio="$10.000">
+                                <span class="chip-nombre">Corte</span>
+                                <span class="chip-precio">$10.000</span>
+                            </button>
+                            <button type="button" class="chip" data-valor="Teñido Mechas" data-precio="$40.000">
+                                <span class="chip-nombre">Teñido Mechas</span>
+                                <span class="chip-precio">$40.000</span>
+                            </button>
+                            <button type="button" class="chip" data-valor="Teñido Global" data-precio="$50.000">
+                                <span class="chip-nombre">Teñido Global</span>
+                                <span class="chip-precio">$50.000</span>
+                            </button>
+                            <button type="button" class="chip" data-valor="Arreglo de barba" data-precio="$5.000">
+                                <span class="chip-nombre">Arreglo de barba</span>
+                                <span class="chip-precio">$5.000</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="servicio" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>2. Elegí el día y el horario</label>
+                        <div class="campo-fila">
+                            <input type="date" id="fecha" aria-label="Fecha" required>
+                            <input type="time" id="hora" aria-label="Hora" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label>3. Dejanos tus datos</label>
+                        <div class="campo-fila">
+                            <input type="text" id="nombre" placeholder="Nombre" aria-label="Nombre" required>
+                            <input type="tel" id="telefono" placeholder="Teléfono" aria-label="Teléfono" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-reservar" id="btnReservar" disabled>
+                        Reservar turno
+                    </button>
+                </form>
+
+                <aside class="resumen" id="resumen" aria-live="polite">
+                    <span class="resumen-etiqueta">Tu turno</span>
+                    <div class="resumen-linea">
+                        <span>Servicio</span>
+                        <strong id="resServicio">—</strong>
+                    </div>
+                    <div class="resumen-linea">
+                        <span>Fecha</span>
+                        <strong id="resFecha">—</strong>
+                    </div>
+                    <div class="resumen-linea">
+                        <span>Hora</span>
+                        <strong id="resHora">—</strong>
+                    </div>
+                    <div class="resumen-linea resumen-precio">
+                        <span>Precio</span>
+                        <strong id="resPrecio">—</strong>
+                    </div>
+                </aside>
+
+            </div>
+
+            <div class="confirmacion" id="confirmacion" hidden>
+                <div class="confirmacion-check">✓</div>
+                <h3>¡Turno reservado!</h3>
+                <p id="confirmacionTexto"></p>
+                <button type="button" class="btn-reservar btn-secundario" id="btnNuevo">
+                    Reservar otro turno
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Locobarber Shop. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
