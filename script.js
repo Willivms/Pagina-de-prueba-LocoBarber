@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnReservar.disabled = true;
 
         try {
-            const respuesta = await fetch('http://localhost:5000/api/reservar', {
+            const respuesta = await fetch('https://pagina-de-prueba-locobarber.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
