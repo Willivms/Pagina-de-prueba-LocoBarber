@@ -523,6 +523,11 @@ footer p{
     font-size: 0.85rem;
     color: var(--texto-tenue);
 }
+.ubicacion{
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--borde);
+}
 
 /* ---------- Accesibilidad: foco visible ---------- */
 a:focus-visible,
@@ -544,4 +549,66 @@ select:focus-visible{
     .logo-video{
         display: none;
     }
+}
+
+
+/* ============================================
+   NUEVAS ANIMACIONES Y BOTÓN WHATSAPP
+   ============================================ */
+
+/* --- Animaciones de Inicio --- */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.titulo-animado {
+    opacity: 1;
+    animation-name: aparecer;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.eslogan-animado {
+    opacity: 0;
+    animation-name: aparecer;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+/* --- Estilo Botón WhatsApp --- */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-btn img {
+    width: 35px;
+    height: 35px;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+    background-color: #20b358;
 }
