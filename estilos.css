@@ -222,27 +222,68 @@ section > p{
     border-radius: 14px;
     padding: 2rem 1.5rem;
     text-align: center;
-    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .servicios .servicios:hover{
     transform: translateY(-6px);
     border-color: var(--azul);
     background: var(--superficie-2);
+    box-shadow: 0 12px 30px rgba(0, 79, 248, 0.25);
+}
+
+.servicios .servicios:active{
+    transform: translateY(-3px) scale(0.97);
+}
+
+/* onda azul al tocar, igual que el botón del hero */
+.servicios .servicios::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 79, 248, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.servicios .servicios.clic::after{
+    animation: onda 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .servicios .servicios.clic::after{
+        animation: none;
+    }
 }
 
 .servicios h3{
     font-family: var(--display);
-    letter-spacing: 0.02em;
-    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 1.6rem;
     color: var(--texto);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
 }
 
 .servicios .servicios p{
     color: var(--azul);
-    font-weight: 700;
-    font-size: 1.15rem;
+    font-family: var(--cuerpo);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    font-size: 1.2rem;
 }
 
 /* ---------- Galería ---------- */
@@ -583,6 +624,81 @@ select:focus-visible{
     animation-timing-function: ease-out;
     animation-delay: 0.5s;
     animation-fill-mode: forwards;
+}
+
+.boton-animado {
+    opacity: 0;
+    animation-name: aparecer;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+/* --- Botón CTA del hero: "Reservá tu turno" --- */
+.btn-hero {
+    position: relative;
+    display: inline-block;
+    margin-top: 2.2rem;
+    padding: 1rem 2.6rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--azul), var(--azul-profundo));
+    color: #fff;
+    font-family: var(--display);
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 28px rgba(0, 79, 248, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.btn-hero:hover{
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, var(--azul-profundo), var(--azul));
+    box-shadow: 0 14px 34px rgba(0, 79, 248, 0.5);
+}
+
+.btn-hero:active{
+    transform: translateY(-1px) scale(0.96);
+}
+
+/* onda expansiva al tocar el botón */
+.btn-hero::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn-hero.clic::after{
+    animation: onda 0.6s ease-out;
+}
+
+@keyframes onda{
+    from{
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.6;
+    }
+    to{
+        transform: translate(-50%, -50%) scale(9);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-hero.clic::after{
+        animation: none;
+    }
 }
 
 /* --- Estilo Botón WhatsApp --- */

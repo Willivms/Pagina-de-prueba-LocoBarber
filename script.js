@@ -14,6 +14,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ---------- Botón CTA del hero: animación de onda al tocar ---------- */
+    const btnHero = document.querySelector('.btn-hero');
+    if (btnHero) {
+        btnHero.addEventListener('click', () => {
+            btnHero.classList.remove('clic');
+            // Forzar reflow para poder reiniciar la animación en clics seguidos.
+            void btnHero.offsetWidth;
+            btnHero.classList.add('clic');
+        });
+        btnHero.addEventListener('animationend', () => {
+            btnHero.classList.remove('clic');
+        });
+    }
+
+    /* ---------- Tarjetas de servicios: onda al tocar + redirigen a turnos con el servicio preseleccionado ---------- */
+    const botonesServicio = document.querySelectorAll('.servicios[data-servicio]');
+    const seccionTurnos = document.getElementById('turnos');
+
+    botonesServicio.forEach((boton) => {
+        boton.addEventListener('click', () => {
+            boton.classList.remove('clic');
+            void boton.offsetWidth;
+            boton.classList.add('clic');
+
+            const chipCoincidente = document.querySelector(`.chip[data-valor="${boton.dataset.servicio}"]`);
+            if (chipCoincidente) {
+                chipCoincidente.click();
+            }
+
+            if (seccionTurnos) {
+                seccionTurnos.scrollIntoView({
+                    behavior: prefiereMenosMovimiento ? 'auto' : 'smooth',
+                    block: 'start',
+                });
+            }
+        });
+
+        boton.addEventListener('animationend', () => {
+            boton.classList.remove('clic');
+        });
+    });
+
     /* ---------- Flujo de turnos ---------- */
     const formulario = document.getElementById('formulario');
     if (!formulario) return;
