@@ -17,11 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Botón CTA del hero: animación de onda al tocar ---------- */
     const btnHero = document.querySelector('.btn-hero');
     if (btnHero) {
-        btnHero.addEventListener('click', () => {
+        btnHero.addEventListener('click', (e) => {
+            e.preventDefault(); // Evitamos el salto predeterminado
+            
             btnHero.classList.remove('clic');
             // Forzar reflow para poder reiniciar la animación en clics seguidos.
             void btnHero.offsetWidth;
             btnHero.classList.add('clic');
+            
+            // Navegación suave vía JS
+            const seccionTurnos = document.getElementById('turnos');
+            const nav = document.querySelector('nav');
+            const navHeight = nav ? nav.offsetHeight : 70;
+            
+            if (seccionTurnos) {
+                const destinoY = seccionTurnos.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({
+                    top: destinoY,
+                    behavior: prefiereMenosMovimiento ? 'auto' : 'smooth'
+                });
+            }
         });
         btnHero.addEventListener('animationend', () => {
             btnHero.classList.remove('clic');
@@ -44,15 +59,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (seccionTurnos) {
-                seccionTurnos.scrollIntoView({
-                    behavior: prefiereMenosMovimiento ? 'auto' : 'smooth',
-                    block: 'start',
+                const nav = document.querySelector('nav');
+                const navHeight = nav ? nav.offsetHeight : 70;
+                const destinoY = seccionTurnos.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({
+                    top: destinoY,
+                    behavior: prefiereMenosMovimiento ? 'auto' : 'smooth'
                 });
             }
         });
 
         boton.addEventListener('animationend', () => {
             boton.classList.remove('clic');
+        });
+    });
+
+    /* ---------- Navegación de enlaces del menú con compensación del Navbar ---------- */
+    document.querySelectorAll('nav a[href^="#"]').forEach(enlace => {
+        enlace.addEventListener('click', (e) => {
+            e.preventDefault();
+            const destinoId = enlace.getAttribute('href').substring(1);
+            const destinoEl = document.getElementById(destinoId);
+            if (destinoEl) {
+                const nav = document.querySelector('nav');
+                const navHeight = nav ? nav.offsetHeight : 70;
+                const destinoY = destinoEl.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({
+                    top: destinoY,
+                    behavior: prefiereMenosMovimiento ? 'auto' : 'smooth'
+                });
+            }
         });
     });
 
@@ -228,7 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 turnosWrap.hidden = true;
                 formulario.hidden = true;
                 confirmacion.hidden = false;
-                confirmacion.scrollIntoView({ behavior: prefiereMenosMovimiento ? 'auto' : 'smooth', block: 'center' });
+                
+                const nav = document.querySelector('nav');
+                const navHeight = nav ? nav.offsetHeight : 70;
+                const destinoY = confirmacion.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({ behavior: prefiereMenosMovimiento ? 'auto' : 'smooth', top: destinoY });
             } else {
                 const dataError = await respuesta.json();
                 alert(dataError.error || "Hubo un problema al registrar el turno en el servidor.");
@@ -259,7 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmacion.hidden = true;
         turnosWrap.hidden = false;
         formulario.hidden = false;
-        turnosWrap.scrollIntoView({ behavior: prefiereMenosMovimiento ? 'auto' : 'smooth', block: 'center' });
+        
+        const nav = document.querySelector('nav');
+        const navHeight = nav ? nav.offsetHeight : 70;
+        const destinoY = seccionTurnos.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ behavior: prefiereMenosMovimiento ? 'auto' : 'smooth', top: destinoY });
     });
 
     /* ---------- Scroll Reveal con IntersectionObserver ---------- */

@@ -25,10 +25,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html{
     scroll-behavior: smooth;
+    scroll-padding-top: 70px;
 }
 
 body{
@@ -36,6 +38,8 @@ body{
     color: var(--texto);
     font-family: var(--cuerpo);
     line-height: 1.5;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* ---------- Franja de barbero (elemento de firma) ---------- */
@@ -71,6 +75,7 @@ nav ul{
     gap: 2.5rem;
     list-style: none;
     padding: 1.1rem 1.5rem;
+    flex-wrap: wrap;
 }
 
 nav a{
@@ -144,7 +149,7 @@ nav a:hover::after{
 h1{
     font-family: var(--display);
     color: var(--texto);
-    font-size: clamp(3rem, 9vw, 5.5rem);
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
     letter-spacing: 0.03em;
     text-align: center;
     line-height: 0.95;
@@ -366,7 +371,7 @@ form input{
     background: var(--fondo);
     color: var(--texto);
     font-family: var(--cuerpo);
-    font-size: 0.95rem;
+    font-size: 1rem;
     outline: none;
     color-scheme: dark;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -549,6 +554,14 @@ form input:focus{
 }
 
 @media (max-width: 760px){
+    section {
+        padding: 3.5rem 1.2rem;
+    }
+    nav ul {
+        gap: 1.5rem;
+        padding: 0.8rem 1rem;
+        justify-content: center;
+    }
     .turnos-wrap{
         grid-template-columns: 1fr;
     }
@@ -558,9 +571,18 @@ form input:focus{
 }
 
 @media (max-width: 560px){
+    section {
+        padding: 3rem 1rem;
+    }
+    .logo-contenido {
+        padding: 4rem 1rem 3rem;
+    }
     .campo-fila,
     .chips{
         grid-template-columns: 1fr;
+    }
+    .servicios .servicios {
+        padding: 1.5rem 1rem;
     }
 }
 
