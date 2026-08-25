@@ -60,9 +60,10 @@ nav{
     z-index: 50;
     display: flex;
     justify-content: center;
-    background: rgba(11, 13, 18, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--borde);
+    background: rgba(11, 13, 18, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 nav ul{
@@ -147,6 +148,7 @@ h1{
     letter-spacing: 0.03em;
     text-align: center;
     line-height: 0.95;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 h1 span,
@@ -160,8 +162,9 @@ h1::after{
     width: 90px;
     height: 4px;
     margin: 1.4rem auto 0;
-    background: var(--azul);
+    background: linear-gradient(90deg, var(--azul), var(--azul-profundo));
     border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0, 79, 248, 0.4);
 }
 
 h2{
@@ -181,11 +184,14 @@ h2{
     color: var(--texto-tenue);
     margin-top: 0.6rem;
     letter-spacing: normal;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 span{
-    color: var(--azul);
-    font-weight: 600;
+    background: linear-gradient(135deg, #4facfe, var(--azul));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 p{
@@ -217,10 +223,10 @@ section > p{
 }
 
 .servicios .servicios{
-    background: var(--superficie);
-    border: 1px solid var(--borde);
-    border-radius: 14px;
-    padding: 2rem 1.5rem;
+    background: linear-gradient(160deg, var(--superficie) 0%, rgba(18, 21, 29, 0.4) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 2.2rem 1.5rem;
     text-align: center;
     transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     position: relative;
@@ -231,17 +237,18 @@ section > p{
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .servicios .servicios:hover{
     transform: translateY(-6px);
-    border-color: var(--azul);
-    background: var(--superficie-2);
-    box-shadow: 0 12px 30px rgba(0, 79, 248, 0.25);
+    border-color: rgba(0, 79, 248, 0.4);
+    background: linear-gradient(160deg, var(--superficie-2) 0%, rgba(25, 29, 40, 0.6) 100%);
+    box-shadow: 0 12px 30px rgba(0, 79, 248, 0.15), 0 0 0 1px rgba(0, 79, 248, 0.1) inset;
 }
 
 .servicios .servicios:active{
-    transform: translateY(-3px) scale(0.97);
+    transform: translateY(-2px) scale(0.98);
 }
 
 /* onda azul al tocar, igual que el botón del hero */
@@ -297,16 +304,19 @@ section > p{
     width: 100%;
     height: auto;
     object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid var(--borde);
-    filter: grayscale(35%) brightness(0.9);
-    transition: filter 0.3s ease, transform 0.3s ease;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    filter: grayscale(40%) brightness(0.85);
+    transition: filter 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     background: var(--superficie);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .galeria img:hover{
     filter: grayscale(0%) brightness(1.05);
-    transform: scale(1.05);
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 79, 248, 0.2);
+    border-color: rgba(0, 79, 248, 0.3);
 }
 
 /* ---------- Turnos: flujo simple de reserva ---------- */
@@ -728,3 +738,28 @@ select:focus-visible{
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
     background-color: #20b358;
 }
+
+/* --- Animaciones Reveal con Scroll --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Retraso escalonado para elementos hermanos */
+.servicios > .servicios:nth-child(1) { transition-delay: 0.1s; }
+.servicios > .servicios:nth-child(2) { transition-delay: 0.2s; }
+.servicios > .servicios:nth-child(3) { transition-delay: 0.3s; }
+.servicios > .servicios:nth-child(4) { transition-delay: 0.4s; }
+
+.galeria img:nth-child(1) { transition-delay: 0.1s; }
+.galeria img:nth-child(2) { transition-delay: 0.2s; }
+.galeria img:nth-child(3) { transition-delay: 0.3s; }
+.galeria img:nth-child(4) { transition-delay: 0.4s; }
+
+

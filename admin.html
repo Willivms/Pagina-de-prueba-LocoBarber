@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Locobarber</title>
+    <!-- Estilo iOS / Minimalista para el celular -->
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f2f2f7; 
+            margin: 0; 
+            padding: 20px; 
+            color: #1c1c1e; 
+        }
+        h1 { text-align: center; font-size: 24px; margin-bottom: 24px; }
+        .card { 
+            background: #fff; 
+            border-radius: 12px; 
+            padding: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+        }
+        label { font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px; color: #8e8e93;}
+        input[type="date"], input[type="password"] { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #c7c7cc; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            margin-bottom: 15px; 
+        }
+        .grid-horarios { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+        }
+        .btn-hora { 
+            padding: 14px 10px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-libre { background-color: #34c759; color: white; }
+        .btn-ocupado { background-color: #ff3b30; color: white; }
+        .btn-hora:active { transform: scale(0.95); }
+        .info { font-size: 14px; color: #666; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <h1>Gestión de Turnos 💈</h1>
+    
+    <div class="card">
+        <label for="clave">1. Clave de administrador:</label>
+        <input type="password" id="clave" placeholder="Ingresá la clave">
+        
+        <label for="fechaAdmin">2. Elegí el día a gestionar:</label>
+        <input type="date" id="fechaAdmin">
+    </div>
+
+    <div class="card" id="panelHorarios" style="display: none;">
+        <h3 style="margin-top:0;">Turnos del <span id="fechaSeleccionada"></span></h3>
+        <p class="info">Tocá un horario para cambiarlo. Verde = Libre en la web, Rojo = Oculto en la web.</p>
+        <div class="grid-horarios" id="contenedorHorarios">
+            <!-- Los botones se cargan acá con JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'https://pagina-de-prueba-locobarber.onrender.com';
+        const claveInput = document.getElementById('clave');
+        const fechaInput = document.getElementById('fechaAdmin');
+        const panelHorarios = document.getElementById('panelHorarios');
+        const contenedorHorarios = document.getElementById('contenedorHorarios');
+        const txtFecha = document.getElementById('fechaSeleccionada');
+
+        // Los mismos horarios de tu index.html
+        const horariosLocobarber = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "21:30"];
+
+        fechaInput.addEventListener('change', cargarHorarios);
+
+        async function cargarHorarios() {
+            const fecha = fechaInput.value;
+            if (!fecha) {
+                panelHorarios.style.display = 'none';
+                return;
+            }
+
+            // Formateamos la fecha a DD/MM/AAAA para mostrar en el título
+            txtFecha.textContent = fecha.split('-').reverse().join('/');
+            panelHorarios.style.display = 'block';
+            contenedorHorarios.innerHTML = '<p>Cargando horarios...</p>';
+
+            try {
+                const respuesta = await fetch(`${baseUrl}/api/ocupados?fecha=${fecha}`);
+                const datos = await respuesta.json();
+                const ocupados = datos.ocupados || [];
+                
+                contenedorHorarios.innerHTML = '';
+
+                horariosLocobarber.forEach(hora => {
+                    const estaOcupado = ocupados.includes(hora);
+                    const btn = document.createElement('button');
+                    
+                    btn.innerHTML = `${hora}<br><small>${estaOcupado ? 'Ocupado 🔒' : 'Libre ✅'}</small>`;
+                    btn.className = `btn-hora ${estaOcupado ? 'btn-ocupado' : 'btn-libre'}`;
+                    
+                    btn.onclick = () => cambiarEstado(fecha, hora, estaOcupado);
+                    contenedorHorarios.appendChild(btn);
+                });
+            } catch (e) {
+                contenedorHorarios.innerHTML = '<p>Error al conectar con la base de datos.</p>';
+            }
+        }
+
+        async function cambiarEstado(fecha, hora, estaOcupado) {
+            const clave = claveInput.value.trim();
+            if (!clave) {
+                alert("Por favor, ingresá la clave de administrador primero.");
+                claveInput.focus();
+                return;
+            }
+
+            // Si estaba ocupado, llamamos a la ruta para liberar. Si estaba libre, a la de ocupar.
+            const endpoint = estaOcupado ? '/api/liberar' : '/api/ocupar';
+            
+            try {
+                const res = await fetch(`${baseUrl}${endpoint}?fecha=${fecha}&hora=${hora}&clave=${clave}`);
+                if (res.ok) {
+                    cargarHorarios(); // Refresca los botones para cambiar de color
+                } else {
+                    alert("Error: Verifica que la clave sea correcta.");
+                }
+            } catch (e) {
+                alert("Error de red al intentar cambiar el estado del turno.");
+            }
+        }
+    </script>
+</body>
+</html>
+

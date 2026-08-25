@@ -45,23 +45,23 @@
     <main>
         <!-- parte de servicios -->
         <section id="servicios">
-            <h2>Servicios</h2>
-            <p>Descubrí nuestros servicios <span>de barbería de alta calidad.</span></p>
+            <h2 class="reveal">Servicios</h2>
+            <p class="reveal">Descubrí nuestros servicios <span>de barbería de alta calidad.</span></p>
 
             <div class="servicios">
-                <button type="button" class="servicios" data-servicio="Corte">
+                <button type="button" class="servicios reveal" data-servicio="Corte">
                     <h3>Corte de cabello</h3>
                     <p>$10.000</p>
                 </button>
-                <button type="button" class="servicios" data-servicio="Teñido Mechas">
+                <button type="button" class="servicios reveal" data-servicio="Teñido Mechas">
                     <h3>Teñido Mechas</h3>
                     <p>$40.000</p>
                 </button>
-                <button type="button" class="servicios" data-servicio="Teñido Global">
+                <button type="button" class="servicios reveal" data-servicio="Teñido Global">
                     <h3>Teñido Global</h3>
                     <p>$50.000</p>
                 </button>
-                <button type="button" class="servicios" data-servicio="Arreglo de barba">
+                <button type="button" class="servicios reveal" data-servicio="Arreglo de barba">
                     <h3>Arreglo de barba</h3>
                     <p>$5.000</p>
                 </button>
@@ -70,14 +70,14 @@
 
         <!-- galería -->
         <section id="galeria">
-            <h2>Cortes</h2>
-            <p>Algunos de nuestros <span>trabajos recientes.</span></p>
+            <h2 class="reveal">Cortes</h2>
+            <p class="reveal">Algunos de nuestros <span>trabajos recientes.</span></p>
 
             <div class="galeria">
-                <img src="img/IMG_0510_resultado.jpg" alt="Corte de cabello 1" loading="lazy">
-                <img src="img/IMG_1416_resultado.jpg" alt="Corte de cabello 2" loading="lazy">
-                <img src="img/IMG_0569_resultado.jpg" alt="Corte de cabello 3" loading="lazy">
-                <img src="img/IMG_3129_resultado.jpg" alt="Corte de cabello 4" loading="lazy">
+                <img src="img/IMG_0510_resultado.jpg" alt="Corte de cabello 1" loading="lazy" class="reveal">
+                <img src="img/IMG_1416_resultado.jpg" alt="Corte de cabello 2" loading="lazy" class="reveal">
+                <img src="img/IMG_0569_resultado.jpg" alt="Corte de cabello 3" loading="lazy" class="reveal">
+                <img src="img/IMG_3129_resultado.jpg" alt="Corte de cabello 4" loading="lazy" class="reveal">
             </div>
         </section>
 
@@ -115,10 +115,25 @@
 
                     <div class="campo">
                         <label>2. Elegí el día y el horario</label>
-                        <div class="campo-fila">
-                            <input type="date" id="fecha" aria-label="Fecha" required>
-                            <input type="time" id="hora" aria-label="Hora" required>
+                        <!-- El calendario -->
+                        <input type="date" id="fecha" aria-label="Fecha" required style="margin-bottom: 1rem; width: 100%;">
+                        
+                        <!-- Los botones de horarios -->
+                        <div class="chips" id="chipsHora" style="grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                            <button type="button" class="chip chip-hora" data-hora="08:00"><span class="chip-nombre">08:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="09:00"><span class="chip-nombre">09:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="10:00"><span class="chip-nombre">10:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="11:00"><span class="chip-nombre">11:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="13:00"><span class="chip-nombre">13:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="14:00"><span class="chip-nombre">14:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="15:00"><span class="chip-nombre">15:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="16:00"><span class="chip-nombre">16:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="17:00"><span class="chip-nombre">17:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="18:00"><span class="chip-nombre">18:00</span></button>
+                            <button type="button" class="chip chip-hora" data-hora="21:30"><span class="chip-nombre">21:30</span></button>
                         </div>
+                        <!-- Acá guardamos la hora seleccionada para mandarla a Python -->
+                        <input type="hidden" id="hora" required>
                     </div>
 
                     <div class="campo">
