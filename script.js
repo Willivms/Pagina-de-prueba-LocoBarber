@@ -14,16 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ---------- Botón CTA del hero: animación de onda al tocar ---------- */
+    /* ---------- Botón CTA del hero ---------- */
     const btnHero = document.querySelector('.btn-hero');
     if (btnHero) {
         btnHero.addEventListener('click', (e) => {
             e.preventDefault(); // Evitamos el salto predeterminado
-            
-            btnHero.classList.remove('clic');
-            // Forzar reflow para poder reiniciar la animación en clics seguidos.
-            void btnHero.offsetWidth;
-            btnHero.classList.add('clic');
             
             // Navegación suave vía JS
             const seccionTurnos = document.getElementById('turnos');
@@ -38,21 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-        btnHero.addEventListener('animationend', () => {
-            btnHero.classList.remove('clic');
-        });
     }
 
-    /* ---------- Tarjetas de servicios: onda al tocar + redirigen a turnos con el servicio preseleccionado ---------- */
+    /* ---------- Tarjetas de servicios: redirigen a turnos con el servicio preseleccionado ---------- */
     const botonesServicio = document.querySelectorAll('.servicios[data-servicio]');
     const seccionTurnos = document.getElementById('turnos');
 
     botonesServicio.forEach((boton) => {
         boton.addEventListener('click', () => {
-            boton.classList.remove('clic');
-            void boton.offsetWidth;
-            boton.classList.add('clic');
-
             const chipCoincidente = document.querySelector(`.chip[data-valor="${boton.dataset.servicio}"]`);
             if (chipCoincidente) {
                 chipCoincidente.click();
@@ -67,10 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     behavior: prefiereMenosMovimiento ? 'auto' : 'smooth'
                 });
             }
-        });
-
-        boton.addEventListener('animationend', () => {
-            boton.classList.remove('clic');
         });
     });
 
@@ -305,29 +289,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const destinoY = seccionTurnos.getBoundingClientRect().top + window.scrollY - navHeight;
         window.scrollTo({ behavior: prefiereMenosMovimiento ? 'auto' : 'smooth', top: destinoY });
     });
-
-    /* ---------- Scroll Reveal con IntersectionObserver ---------- */
-    if ('IntersectionObserver' in window) {
-        const observerOpciones = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver((entradas) => {
-            entradas.forEach(entrada => {
-                if (entrada.isIntersecting) {
-                    entrada.target.classList.add('visible');
-                    // Opcional: dejar de observar si solo queremos que se anime una vez al entrar
-                    observer.unobserve(entrada.target);
-                }
-            });
-        }, observerOpciones);
-
-        const elementosReveal = document.querySelectorAll('.reveal');
-        elementosReveal.forEach(el => observer.observe(el));
-    } else {
-        // Fallback si no soporta IntersectionObserver
-        const elementosReveal = document.querySelectorAll('.reveal');
-        elementosReveal.forEach(el => el.classList.add('visible'));
-    }
 });

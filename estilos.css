@@ -256,31 +256,6 @@ section > p{
     transform: translateY(-2px) scale(0.98);
 }
 
-/* onda azul al tocar, igual que el botón del hero */
-.servicios .servicios::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    background: rgba(0, 79, 248, 0.4);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.servicios .servicios.clic::after{
-    animation: onda 0.6s ease-out;
-}
-
-@media (prefers-reduced-motion: reduce){
-    .servicios .servicios.clic::after{
-        animation: none;
-    }
-}
-
 .servicios h3{
     font-family: var(--display);
     letter-spacing: 0.05em;
@@ -625,48 +600,6 @@ select:focus-visible{
 }
 
 
-/* ============================================
-   NUEVAS ANIMACIONES Y BOTÓN WHATSAPP
-   ============================================ */
-
-/* --- Animaciones de Inicio --- */
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.titulo-animado {
-    opacity: 1;
-    animation-name: aparecer;
-    animation-duration: 1s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-}
-
-.eslogan-animado {
-    opacity: 0;
-    animation-name: aparecer;
-    animation-duration: 1s;
-    animation-timing-function: ease-out;
-    animation-delay: 0.5s;
-    animation-fill-mode: forwards;
-}
-
-.boton-animado {
-    opacity: 0;
-    animation-name: aparecer;
-    animation-duration: 1s;
-    animation-timing-function: ease-out;
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-}
-
 /* --- Botón CTA del hero: "Reservá tu turno" --- */
 .btn-hero {
     position: relative;
@@ -697,42 +630,6 @@ select:focus-visible{
     transform: translateY(-1px) scale(0.96);
 }
 
-/* onda expansiva al tocar el botón */
-.btn-hero::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.55);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.btn-hero.clic::after{
-    animation: onda 0.6s ease-out;
-}
-
-@keyframes onda{
-    from{
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0.6;
-    }
-    to{
-        transform: translate(-50%, -50%) scale(9);
-        opacity: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce){
-    .btn-hero.clic::after{
-        animation: none;
-    }
-}
-
 /* --- Estilo Botón WhatsApp --- */
 .whatsapp-btn {
     position: fixed;
@@ -760,28 +657,5 @@ select:focus-visible{
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
     background-color: #20b358;
 }
-
-/* --- Animaciones Reveal con Scroll --- */
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Retraso escalonado para elementos hermanos */
-.servicios > .servicios:nth-child(1) { transition-delay: 0.1s; }
-.servicios > .servicios:nth-child(2) { transition-delay: 0.2s; }
-.servicios > .servicios:nth-child(3) { transition-delay: 0.3s; }
-.servicios > .servicios:nth-child(4) { transition-delay: 0.4s; }
-
-.galeria img:nth-child(1) { transition-delay: 0.1s; }
-.galeria img:nth-child(2) { transition-delay: 0.2s; }
-.galeria img:nth-child(3) { transition-delay: 0.3s; }
-.galeria img:nth-child(4) { transition-delay: 0.4s; }
 
 
